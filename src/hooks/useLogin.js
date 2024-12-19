@@ -31,7 +31,7 @@ const useLogin = () => {
     try {
       const resposta = await instancia.login(cpf, senha);
       setIsLoading(false);
-      if (resposta.data.success && resposta.data.permissao == 'vigia' && resposta.data.status == 1) {
+      if (resposta.success) {
         return true;
       } else {
         return false;
@@ -53,8 +53,6 @@ const useLogin = () => {
     errorCpf,
     errorSenha,
   };
-
-  // 
 };
 
 export default useLogin;
