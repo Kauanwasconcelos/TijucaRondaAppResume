@@ -1,35 +1,34 @@
-// components/home/Header.js
 import React from 'react';
-import {Image, View} from 'react-native';
-import {HeaderContainer, HeaderText, HeaderTitle} from '../../styles/Home/HeaderStyle'; // Importa os estilos
-import {Button, Text} from 'react-native-paper';
-import {useState} from 'react';
+import { Image, View } from 'react-native';
+import { HeaderContainer, HeaderTitle, HeaderText, ReloadButton } from '../../styles/Home/HeaderStyle'; // Atualizando os estilos
+import { Button, Text } from 'react-native-paper';
+import { useState } from 'react';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const Header = ({name, setReload, reload}) => {
+const Header = ({ name, setReload, reload }) => {
   return (
     <HeaderContainer>
+      {/* Logo e Texto com tamanho proporcional */}
       <HeaderTitle>
-      <Image
+        <Image
           source={require('../../../assets/img/logotijucapng.png')}
-          style={{width: 80, height: 80}}
+          style={{ width: wp('15%'), height: hp('8%') }}  // Tamanho proporcional
         />
-        <HeaderText>{name}</HeaderText> {/* Nome do vigia à direita */}
-    
+        <HeaderText>{name}</HeaderText> {/* Nome do vigia */}
       </HeaderTitle>
 
-
-      <View>
+      {/* Botão de recarregar */}
+      <ReloadButton>
         <Button
           icon="reload"
           mode="contained"
           onPress={() => {
             setReload(!reload);
-            console.log('deu certo recarregar');
+            console.log('Recarregando...');
           }}>
-          {' '}
-          <Text>Recarregar</Text>
+          <Text style={{ color: 'white' }}>Recarregar</Text>
         </Button>
-      </View>
+      </ReloadButton>
     </HeaderContainer>
   );
 };

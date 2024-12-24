@@ -3,7 +3,7 @@ import axios from 'axios';
 const iniciaRonda = async (idRonda, idUsuario) => {
   try {
     const resposta = await axios.post(
-      'http://192.168.9.247:9010/ronda/rondaBegin',
+      'http://192.168.9.247:9010/ronda/begin',
       {
         idRonda: idRonda,
         idUsuario: idUsuario,

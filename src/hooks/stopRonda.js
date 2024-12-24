@@ -4,7 +4,7 @@ const encerraRonda = async idRonda => {
   console.log(idRonda + "ENCERRARONDA")
   try {
     const resposta = await axios.post(
-      'http://192.168.9.247:9010/ronda/rondaStop',
+      'http://192.168.9.247:9010/ronda/stop',
       {
         idRonda: idRonda,
       },

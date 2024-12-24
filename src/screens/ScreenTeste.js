@@ -1,58 +1,133 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+// screens/HomeScreen.js
+import React, {useEffect, useState} from 'react';
+import useRondas from '../hooks/useRondas';
+import {
+  ListaView,
+  List,
+  BView,
+  B1,
+  TB1,
+  B2,
+  B2Stop,
+} from '../styles/Home/RondaListStyle';
+
+import Header from '../components/home/Header';
+import {HomeContainer} from '../styles/Home/HomeStyles';
+import {
+  CommonActions,
+  NavigationContainer,
+  useFocusEffect,
+} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ModalComponent from '../components/home/ModalComponent';
+
+import useInitRealm from '../hooks/Realm/useInitRealm';
+import useRealmRonda from '../hooks/Realm/useRealmRonda';
+import useDefineRonda from '../hooks/Realm/useDefineRonda';
+import lerRondaAtual from '../hooks/Realm/useDefineRonda';
 import { Button } from 'react-native-paper';
+import { TouchableOpacity , Text} from 'react-native';
 
-const ReloadPage = () => {
-  const [reload, setReload] = useState(false);
+const Stack = createNativeStackNavigator();
+const HomeScreen = ({navigation}) => {
+  const [rondas, setRondas] = useState([]);
+  const [modalVisible, setModalVisible] = useState([]);
+  const [reload, setReload] = useState();
+  const [rondaAtual, setRondaAtual] = useState();
+  const [realm, setRealm] = useState(null);
 
-  const handleReload = () => {
-    setReload(!reload); // Alterna o valor do estado para forçar o recarregamento
+  const onClose = () => {
+    setReload(!reload);
+    setModalVisible(null);
   };
 
-  const eita = ()=>{
-    console.log("Clicou")
-    return <Text>
-      Clicou
-    </Text>
-  }
+useEffect(()=>{
+  console.log("Fui carregado no useeffect")
+
+  const defineRondaAtual = async () => {
+    const rondaAtual = await useDefineRonda(realm);
+    console.log(rondaAtual + "rondaAtual");
+    setRondaAtual(rondaAtual);
+  };
+  defineRondaAtual();
+
+
+})
+
+
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log("Fui Carregado no focus")
+
+
+
+      const carregaRonda = async () => {
+        try {
+          const respostaHookRondas = await useRondas();
+          console.log(respostaHookRondas)
+          setRondas(respostaHookRondas);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
+      const initRealm = async () => {
+        const iniciaRealm = await useInitRealm();
+        setRealm(iniciaRealm);
+      };
+      initRealm();
+      carregaRonda();
+    }, [reload]),
+  );
 
   return (
-    <View key={reload ? 'reload-true' : 'reload-false'} style={styles.container}>
-      <TouchableOpacity onPress={handleReload}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/100' }} // Substitua pela sua logo
-          style={styles.logo}
-        />
-      </TouchableOpacity>
-      <Text style={styles.text}>Clique na logo para recarregar a página!</Text>
+    <>
+      <HomeContainer>
+        <Header name="VIGIA"  setReload={setReload} reload={reload}/>
+        <ListaView>
+          <List
+            data={rondas}
+            renderItem={({item}) => (
+              <BView
+                style={
+                  item.horaFim !== '' ? {display: 'none'} : {display: 'flex'}
+                }>
+                <B1>
+                  <TB1>{item.nomeRota}</TB1>
+                </B1>
+                {item.idUsuario ? (
+                  <B2Stop
+                    onPress={() => {
+                      setModalVisible(item.idRonda);
+                    }}
+                  />
+                ) : (
+                  <B2
+                    onPress={() => {
+                      setModalVisible(item.idRonda);
+                    }}
+                  />
+                )}
+                {modalVisible === item.idRonda && (
+                  <ModalComponent
+                    isVisible={true}
+                    onClose={onClose}
+                    defineRondaAtual={useRealmRonda}
+                    prop={[item.idRonda, rondaAtual, realm]}
+                  />
+                )}
+              </BView>
+            )}
+            keyExtractor={item => {
+              item.idRonda;
+            }}
+          />
+        </ListaView>
 
-    <Button
-    icon="reload"
-    mode="contained"
-    onPress={eita}
-
-   
-    
-    
-    />
-    </View>
+      </HomeContainer>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 16,
-  },
-});
-
-export default ReloadPage;
+export default HomeScreen;

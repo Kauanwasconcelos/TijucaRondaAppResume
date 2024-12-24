@@ -1,33 +1,32 @@
-// components/home/HeaderStyles.js
 import styled from 'styled-components/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const HeaderContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({theme}) =>
-    theme.colors.surface}; /* Usa a cor primária do tema */
+  background-color: ${({ theme }) => theme.colors.surface}; /* Usa a cor primária do tema */
   border-radius: 10px;
+  padding: ${wp('3%')}px; /* Ajuste o padding para dar espaço ao redor */
+
 `;
 
+export const HeaderTitle = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 
-export const HeaderTitle = styled.Text`
-font-size: 18px;
-font-weight: bold;
-color: ${({theme}) => theme.colors.text};
-margin-left: 10px;
-align-items: center;
-
-`
 export const HeaderText = styled.Text`
-  color: ${({theme}) => theme.colors.text}; /* Usa a cor de texto do tema */
-  font-size: 14px;
-
-  font-family: Poppins-Light;
+  font-size: ${wp('5%')};  /* Tamanho dinâmico baseado na largura da tela */
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+  margin-left: ${wp('3%')};  /* Ajuste do espaçamento entre a imagem e o texto */
+  font-family: Poppins-Bold;
   text-transform: uppercase;
 `;
 
-export const TextButton = styled.Text`
-color: white;
-
-`
+export const ReloadButton = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: ${wp('30%')}; /* O botão ocupa uma parte significativa da largura da tela */
+`;
