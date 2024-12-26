@@ -20,28 +20,8 @@ const QRArea = ({ onScanSuccess, onReload }) => {
 
   return (
     <Container>
-      <ScannerContainer>
-        <QRCodeScanner
-          onRead={handleScanSuccess}
-          showMarker
-          reactivate
-          reactivateTimeout={3000}
-          topContent={<View />}
-          bottomContent={
-            <ReloadButtonContainer>
-              <Button mode="contained" onPress={handleReload}>
-                Recarregar Scanner
-              </Button>
-            </ReloadButtonContainer>
-          }
-        />
-      </ScannerContainer>
-
-      {scanned && (
-        <Button mode="contained" onPress={handleReload}>
-          Tentar Novamente
-        </Button>
-      )}
+     
+     
     </Container>
   );
 };

@@ -9,6 +9,7 @@ import LoginScreen from '../screens/LoginScreen';
 import theme from '../theme/theme';
 import ScreenTeste from '../screens/ScreenTeste';
 import {HoverEffect} from 'react-native-gesture-handler';
+import QrCodeScreen from '../screens/QrCodeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,7 +52,7 @@ export default function AppNavigator() {
                 headerShown: false,
               }}>
               <Stack.Screen name="Teste" component={ScreenTeste} />
-              <Stack.Screen name="Login" component={HomeScreen} />
+              <Stack.Screen name="Login" component={QrCodeScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
             </Stack.Group>
           </Stack.Navigator>

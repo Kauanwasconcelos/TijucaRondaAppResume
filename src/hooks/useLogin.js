@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { validarCpf, validarSenha } from '../utils/validate'; // Importando as validações
 import User from '../api/User';
+import realmInit from "../hooks/Realm/useInitRealm"
+import defineLoginAtual from './Realm/useRealmLogin';
 
 const useLogin = () => {
   const [cpf, setCpf] = useState('');
@@ -8,6 +10,7 @@ const useLogin = () => {
   const [errorCpf, setErrorCpf] = useState('');
   const [errorSenha, setErrorSenha] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [realm, setRealm] = useState()
 
   const instancia = new User();
 
@@ -34,6 +37,9 @@ const useLogin = () => {
       setIsLoading(false);
 
       if (resposta.success) {
+        const frealm = await realmInit()
+        setRealm(frealm)
+        defineLoginAtual(realm,resposta.idUsuario)        
         return true; // Login bem-sucedido
       }
 

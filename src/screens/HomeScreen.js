@@ -106,7 +106,12 @@ const HomeScreen = ({navigation}) => {
                 </BView>
 
                 {/* Colocando o DropArea fora do BView */}
-                {visibleBox === item.idRonda && <DropArea />}
+                {visibleBox === item.idRonda && (<DropArea 
+                idRonda={item.idRonda}
+                
+                
+                
+                />)}
               </>
             )}
             keyExtractor={item => item.idRonda.toString()}

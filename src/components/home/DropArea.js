@@ -1,28 +1,45 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { DropContainer, DropContent } from '../../styles/Home/DropAreaStyles';
+import React, { useEffect, useState } from 'react';
+import { Text, View, ActivityIndicator } from 'react-native';
+import useFetchLocais from '../../hooks/useFetchLocais'; 
+import { useFocusEffect } from '@react-navigation/native';
 
-const DropArea = () => {
-  const locaisTemporarios = [
-    { id: 1, nome: 'T.I', horario: '08:00 - 16:00' },
-    { id: 2, nome: 'Praça de Alimentação', horario: '08:00 - 16:00' },
-    { id: 3, nome: 'Escritório', horario: '08:00 - 16:00' },
-  ];
+const DropArea = ({idRonda}) => {
+  const[locais, setLocais] = useState([]);
+
+
+
+  useEffect(()=>{
+    const fLocais = async ()=>{
+      console.log(idRonda)
+      const locais = await useFetchLocais(idRonda)
+      console.log(locais)
+      setLocais(locais)
+    }
+    fLocais()
+
+  },[])
 
   return (
-    <DropContainer>
-      {locaisTemporarios.map(local => (
-        <View  key={local.id}>
-          <DropContent>
-            <Text>{local.nome}</Text>
-            <Text>{local.horario}</Text>
-          </DropContent>
+    <View>
+      {/* Exibe o indicador de carregamento */}
+
+      {/* Exibe mensagem de erro, se houver */}
+  
+
+      {/* Exibe os dados quando estiver carregado */}
+      
+        <View>
+          {locais.map((local, index) => (
+            <View key={index}>
+              <Text>{local.nomeLocal}</Text>
+            </View>
+          ))}
+          {/* <Text>TESTO</Text> */}
         </View>
-      ))}
-    </DropContainer>
+      
+    </View>
   );
 };
 
-
-
 export default DropArea;
+
