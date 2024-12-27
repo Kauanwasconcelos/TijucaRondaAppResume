@@ -52,8 +52,9 @@ export default function AppNavigator() {
                 headerShown: false,
               }}>
               <Stack.Screen name="Teste" component={ScreenTeste} />
-              <Stack.Screen name="Login" component={QrCodeScreen} />
+              <Stack.Screen name="Login" component={HomeScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="QR" component={QrCodeScreen} />
             </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>

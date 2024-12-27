@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 // Lista View
 export const ListaView = styled.View`
-  height: 70%;
+  height: 60%;
   width: 100%;
   text-align: center;
   border-radius: 10px;

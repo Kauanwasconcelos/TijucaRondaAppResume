@@ -39,6 +39,7 @@ const useLogin = () => {
       if (resposta.success) {
         const frealm = await realmInit()
         setRealm(frealm)
+        
         defineLoginAtual(realm,resposta.idUsuario)        
         return true; // Login bem-sucedido
       }

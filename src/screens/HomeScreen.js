@@ -20,6 +20,7 @@ import useRealmRonda from '../hooks/Realm/useRealmRonda';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import DropArea from '../components/home/DropArea';
 import QRArea from '../components/QrCode/QRArea';
+import {StyledButton} from '../styles/Login/styledComponents';
 
 const HomeScreen = ({navigation}) => {
   const [rondas, setRondas] = useState([]);
@@ -106,18 +107,17 @@ const HomeScreen = ({navigation}) => {
                 </BView>
 
                 {/* Colocando o DropArea fora do BView */}
-                {visibleBox === item.idRonda && (<DropArea 
-                idRonda={item.idRonda}
-                
-                
-                
-                />)}
+                {visibleBox === item.idRonda && (
+                  <DropArea idRonda={item.idRonda} />
+                )}
               </>
             )}
             keyExtractor={item => item.idRonda.toString()}
           />
         </ListaView>
-        <QRArea></QRArea>
+        <QRArea>
+          <StyledButton mode="contained">a</StyledButton>
+        </QRArea>
       </HomeContainer>
     </>
   );

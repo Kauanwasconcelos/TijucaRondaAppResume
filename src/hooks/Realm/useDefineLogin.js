@@ -1,7 +1,7 @@
 const lerLoginAtual = async realm => {
     let login = await realm.objectForPrimaryKey('loginStatus', 1);
     // const rondaRealmVerify = typeof(ronda)
-    
+    console.log(login)
     if (login === null) {
       realm.write(async () => {
         console.log('caindo aqui');

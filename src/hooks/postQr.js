@@ -1,29 +1,26 @@
 import axios from 'axios';
 
-const idUsuario = 1;
-const idRonda = 132;
-const idLocal = 1;
-const latitude = 1;
-const longitude = 1;
+const url = "http://192.168.9.247:9010/geral/createLog";
 
-const url = "http://192.168.9.247:9010/geral/createLo";
-
-const requisicao = async (idUsuario, rondaAtual,valueqr, latitude, longitude, idRonda) => {
-    const body = {
-        idUsuario: idUsuario,
-        idRonda: idRonda,
-        idLocal: idLocal,
-        latitude: latitude,
-        longitude: longitude
-    };
-
+const requisicao = async (idUsuario, rondaAtual,valueqr, latitude, longitude) => {
     try {
-        const response = await axios.post(url, body);
+        const body = {
+            idUsuario: idUsuario,
+            idRonda: rondaAtual,
+            idLocal: valueqr,
+            latitude: latitude,
+            longitude: longitude
+        };
+        console.log(body)
+        const response = await axios.post("http://192.168.9.247:9010/geral/createLog", body);
+        console.log(response.data)
+        
         if(response.data.success){
             return true
         }
         else{return false}
     } catch (error) {
+        console.log(error)
         return false
         console.error('Error:', error);
     }

@@ -6,7 +6,7 @@ export const HeaderContainer = styled.View`
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.surface}; /* Usa a cor primária do tema */
-  border-radius: 10px;
+  border-radius:0px 0px 20px 20px;
   padding: ${wp('3%')}px; /* Ajuste o padding para dar espaço ao redor */
 
 `;
@@ -17,7 +17,7 @@ export const HeaderTitle = styled.View`
 `;
 
 export const HeaderText = styled.Text`
-  font-size: ${wp('5%')};  /* Tamanho dinâmico baseado na largura da tela */
+  font-size: ${wp('4%')};  /* Tamanho dinâmico baseado na largura da tela */
   font-weight: bold;
   color: ${({ theme }) => theme.colors.text};
   margin-left: ${wp('3%')};  /* Ajuste do espaçamento entre a imagem e o texto */

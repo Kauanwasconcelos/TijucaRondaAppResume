@@ -5,9 +5,9 @@ const defineLoginAtual = async (realm, idUsuario) => {
     if (!login) {
       realm.write(async () => {
         console.log('caindo aqui');
-        const write = await realm.create('rondaStatus', {
+        const write = await realm.create('loginStatus', {
           _id: 1,
-          status: 0,
+          idUsuario: 0,
         });
         console.log(write);
         console.log('teste');

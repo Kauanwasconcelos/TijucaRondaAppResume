@@ -28,16 +28,6 @@ const LoginScreen = () => {
       navigation.navigate('Home'); // Redireciona para a tela inicial ao logar
     }
   };
-  
-
-
-
-
-
-
-
-
-
 
   return (
     <LoginContainer>
