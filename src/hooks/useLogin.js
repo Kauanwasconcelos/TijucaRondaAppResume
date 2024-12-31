@@ -10,20 +10,16 @@ const useLogin = () => {
   const [errorCpf, setErrorCpf] = useState('');
   const [errorSenha, setErrorSenha] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [realm, setRealm] = useState()
 
   const instancia = new User();
 
   const requestLogin = async () => {
-    // Limpa os erros antes de validar
     setErrorCpf('');
     setErrorSenha('');
 
-    // Validação dos campos de CPF e senha
     const erroCpf = validarCpf(cpf);
     const erroSenha = validarSenha(senha);
 
-    // Se houver erros, exibe as mensagens e interrompe o fluxo
     if (erroCpf || erroSenha) {
       setErrorCpf(erroCpf);
       setErrorSenha(erroSenha);
@@ -33,18 +29,18 @@ const useLogin = () => {
     setIsLoading(true);
 
     try {
-      const resposta = await instancia.login(cpf, senha); // Chamada ao back-end
+      const resposta = await instancia.login(cpf, senha); // 
       setIsLoading(false);
-
       if (resposta.success) {
         const frealm = await realmInit()
-        setRealm(frealm)
+        // console.log(frealm)
+        // setRealm(frealm)
+        console.log("AQUI ESTOU NO LOGIN")
         
-        defineLoginAtual(realm,resposta.idUsuario)        
-        return true; // Login bem-sucedido
+        defineLoginAtual(frealm,resposta.idUsuario, resposta.token, resposta.nomedeUsuario)        
+        return true;
       }
 
-      // Tratamento de erros específicos do servidor
       if (resposta.message === 'Senha incorreta') {
         setErrorSenha('Senha incorreta. Tente novamente.');
       } else if (resposta.message === 'Usuário não encontrado') {

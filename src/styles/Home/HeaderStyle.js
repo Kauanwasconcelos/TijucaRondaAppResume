@@ -22,10 +22,11 @@ export const HeaderText = styled.Text`
   color: ${({ theme }) => theme.colors.text};
   margin-left: ${wp('3%')};  /* Ajuste do espaçamento entre a imagem e o texto */
   font-family: Poppins-Bold;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 `;
 
 export const ReloadButton = styled.View`
+  
   justify-content: center;
   align-items: center;
   width: ${wp('30%')}; /* O botão ocupa uma parte significativa da largura da tela */

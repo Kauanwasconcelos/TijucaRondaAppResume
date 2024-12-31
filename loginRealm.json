@@ -2,7 +2,9 @@
     "name": "loginStatus",
     "properties": {
       "_id": "int",
-      "idUsuario": "int"
+      "idUsuario": "int",
+      "token": "string",
+      "nomedeUsuario": "string"
     },
     "primaryKey": "_id"
   }

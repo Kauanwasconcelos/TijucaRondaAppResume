@@ -4,8 +4,9 @@ const url = "http://192.168.9.247:9010/geral/createLog";
 
 const requisicao = async (idUsuario, rondaAtual,valueqr, latitude, longitude) => {
     try {
+        console.log(idUsuario)
         const body = {
-            idUsuario: idUsuario,
+            idUsuario: idUsuario.idUsuario,
             idRonda: rondaAtual,
             idLocal: valueqr,
             latitude: latitude,

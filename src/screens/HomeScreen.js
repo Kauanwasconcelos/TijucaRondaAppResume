@@ -21,15 +21,17 @@ import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import DropArea from '../components/home/DropArea';
 import QRArea from '../components/QrCode/QRArea';
 import {StyledButton} from '../styles/Login/styledComponents';
+import lerLoginAtual from '../hooks/Realm/useDefineLogin';
 
 const HomeScreen = ({navigation}) => {
   const [rondas, setRondas] = useState([]);
   const [modalVisible, setModalVisible] = useState([]);
   const [reload, setReload] = useState();
-  const [rondaAtual, setRondaAtual] = useState();
+  const [rondaAtual, setRondaAtual] = useState(0);
   const [realm, setRealm] = useState(null);
   const [visibleBox, setVisibleBox] = useState(null);
-
+  const [usuario, setUsuario] = useState({})
+  
   const toggleBox = idRonda => {
     setVisibleBox(visibleBox === idRonda ? null : idRonda);
   };
@@ -39,13 +41,20 @@ const HomeScreen = ({navigation}) => {
     setModalVisible(null);
   };
 
-  useEffect(() => {
-    const defineRondaAtual = async () => {
-      const rondaAtual = await useDefineRonda(realm);
-      setRondaAtual(rondaAtual);
-    };
-    defineRondaAtual();
-  });
+  const defineLoginAtual = async () => {
+    const loginAtual = await lerLoginAtual(realm);
+    
+    setUsuario(loginAtual);
+  };
+
+  const defineRondaAtual = async () => {
+    const rondaAtual = await useDefineRonda(realm);
+    console.log(rondaAtual)
+    setRondaAtual(rondaAtual);
+  };
+  // useEffect(() => {
+    
+  // },[]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -62,15 +71,21 @@ const HomeScreen = ({navigation}) => {
         const iniciaRealm = await useInitRealm();
         setRealm(iniciaRealm);
       };
+      console.log(usuario.nomedeUsuario)
+
       initRealm();
+      defineLoginAtual()
       carregaRonda();
+      defineLoginAtual()
+      defineRondaAtual();
+      useDefineRonda(realm)
     }, [reload]),
   );
 
   return (
     <>
       <HomeContainer>
-        <Header name="VIGIA" setReload={setReload} reload={reload} />
+        <Header name={usuario.nomedeUsuario} setReload={setReload} reload={reload} />
         <ListaView>
           <List
             data={rondas}
@@ -116,7 +131,7 @@ const HomeScreen = ({navigation}) => {
           />
         </ListaView>
         <QRArea>
-          <StyledButton mode="contained">a</StyledButton>
+          {/* <StyledButton mode="contained">a</StyledButton> */}
         </QRArea>
       </HomeContainer>
     </>

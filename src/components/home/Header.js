@@ -20,6 +20,7 @@ const Header = ({ name, setReload, reload }) => {
       {/* Botão de recarregar */}
       <ReloadButton>
         <Button
+      
           icon="reload"
           mode="contained"
           onPress={() => {

@@ -7,6 +7,7 @@ const initializeRealm = async () => {
       const realmInstance = await Realm.open({
         path: 'tijucaRonda',
         schema: [ronda, login],
+        schemaVersion: 2,
       });
       
       return realmInstance

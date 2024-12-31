@@ -2,8 +2,19 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Alert, ToastAndroid} from 'react-native';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
-import {useCameraDevice, useCodeScanner, Camera} from 'react-native-vision-camera';
-import {Container, LoadingText, CameraContainer} from '../styles/QrCode/QRcodeStyles'; // Estilos importados
+import {
+  useCameraDevice,
+  useCodeScanner,
+  Camera,
+} from 'react-native-vision-camera';
+import {
+  Container,
+  LoadingText,
+  CameraContainer,
+  CameraQR,
+  CameraPreview,
+  CameraPreview2,
+} from '../styles/QrCode/QRcodeStyles'; // Estilos importados
 import lerLoginAtual from '../hooks/Realm/useDefineLogin';
 import useInitRealm from '../hooks/Realm/useInitRealm';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
@@ -73,6 +84,7 @@ const QrCodeScreen = () => {
       console.log('TESTEEEEE');
 
       for (i = 0; i <= 0; i++) {
+        scannerEnable.current = false;
         const valorQr = codes[0].value;
         setValueqr(valorQr);
         console.log(valorQr);
@@ -80,8 +92,8 @@ const QrCodeScreen = () => {
         await getLatitude();
         await defineLoginAtual();
         await defineRondaAtual();
-        console.log(latitude, longitude);
-
+        // console.log(latitude, longitude);
+        
         const requisicaoa = requisicao(
           idUsuario,
           rondaAtual,
@@ -109,16 +121,14 @@ const QrCodeScreen = () => {
   }
 
   return (
-    <Container>
-      <CameraContainer>
-        <Camera
-          codeScanner={codeScanner}
-          device={device}
-          isActive={true}
-          style={{width: '100%', height: '100%'}}
-        />
-      </CameraContainer>
-    </Container>
+   <CameraContainer>
+  <CameraQR codeScanner={codeScanner} device={device} isActive={true} />
+  {/* Adiciona uma sobreposição com transparência ao redor da câmera */}
+  <CameraPreview>
+    <CameraPreview2 />
+  </CameraPreview>
+</CameraContainer>
+
   );
 };
 

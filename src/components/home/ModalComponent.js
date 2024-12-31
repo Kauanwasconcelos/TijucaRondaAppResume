@@ -20,7 +20,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const ModalComponent = ({isVisible, onClose, prop, defineRondaAtual}) => {
   // Verificando o estado do modal (iniciar ou encerrar)
   const isModalA = prop[1] === 0; // Se for 0, é um modal para iniciar a ronda
-
+  console.log(prop[1])
   // Função para iniciar a ronda
   const iniciaRonda = async (idRonda, idUsuario) => {
     const playRonda = await initRonda(idRonda, idUsuario);

@@ -25,6 +25,8 @@ export const BView = styled.View`
   margin: 10px auto;
   border-radius: 10px;
   margin-top: 3%;
+  position: relative;
+  z-index: 10;
 `;
 
 export const B1 = styled.TouchableOpacity`
@@ -43,17 +45,17 @@ export const TB1 = styled.Text`
 `;
 
 export const B2 = styled.TouchableOpacity`
-  width: 13%;
-  height: 70%;
-  border-radius: 10px;
+  width: 10%;
+  height: 40%;
+  border-radius: 50%;
   background-color: #17bf52;
   margin: 20px;
 `;
 
 export const B2Stop = styled.TouchableOpacity`
-  width: 13%;
-  height: 70%;
-  border-radius: 10px;
+   width: 10%;
+  height:40%;
+  border-radius: 50%;
   background-color: #ff464f;
   margin: 20px;
 `;
