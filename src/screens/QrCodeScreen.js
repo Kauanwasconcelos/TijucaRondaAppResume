@@ -29,8 +29,6 @@ const QrCodeScreen = () => {
   const [rondaAtual, setRondaAtual] = useState();
   const scannerEnable = useRef(true);
   const device = useCameraDevice('back');
-  const navigator = useNavigation();
-
   async function getLatitude() {
     try {
       Geolocation.getCurrentPosition(position => {
@@ -105,6 +103,7 @@ const QrCodeScreen = () => {
         if (requisicaoa) {
           scannerEnable.current = true;
           navigator.navigate('Home');
+          
           ToastAndroid.show('Local escaneado com sucesso', ToastAndroid.SHORT);
         } else {
           ToastAndroid.show(

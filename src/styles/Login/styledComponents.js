@@ -9,9 +9,7 @@ export const LoginContainer = styled.SafeAreaView`
   justify-content: flex-end;
 `;
 
-export const FormContainer = styled(KeyboardAvoidingView).attrs({
-  behavior: Platform.OS === 'ios' ? 'padding' : 'height',
-})`
+export const FormContainer = styled(KeyboardAvoidingView)`
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.surface};
   border-top-left-radius: ${wp('5%')}px;

@@ -1,7 +1,6 @@
 const defineLoginAtual = async (realm, idUsuario, token, nomedeUsuario) => {
     let login = await realm.objectForPrimaryKey('loginStatus', 1);
-    // let ronda = await realm.objects("ronda")
-    // console.log(nomedeUsuario)
+    
     
     if (!login) {
       realm.write(async () => {
@@ -18,6 +17,7 @@ const defineLoginAtual = async (realm, idUsuario, token, nomedeUsuario) => {
         login.idUsuario = idUsuario;
         login.token = token,
         login.nomedeUsuario = nomedeUsuario;
+        
       });
     } else {
       realm.write(() => {

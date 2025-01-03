@@ -6,21 +6,26 @@ export const CenteredView = styled.View`
   width: 100%;
   height: 100%;
   flex: 1;
-  justify-content: center; /* Colocando o modal no centro da tela */
+  justify-content: center;
   align-items: center;
 `;
 
 export const ModalView = styled.View`
-  width: ${wp('80%')}; /* Definindo uma largura mais razoável */
-  height: ${({isModalA}) => (isModalA ? hp('35%') : hp('40%'))}; /* Proporção de altura ajustada */
-  background-color: white;
-  padding: ${hp('2%')}px; /* Ajuste do padding para melhorar a visualização */
+  width: ${wp('80%')}; 
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  border-radius: ${wp('5%')}px; /* Borda arredondada */
+  justify-content: center;
+  padding: 30px;
+
+
+  background-color: white;
+  padding: ${hp('2%')}px; 
+  border-radius: ${wp('5%')}px; 
 `;
 
 export const Title = styled.Text`
-  font-size: ${({isModalA}) => (isModalA ? hp('3.5%') : wp('5%'))}; /* Ajuste dinâmico de tamanho */
+  font-size: ${({isModalA}) => (isModalA ? hp('3.5%') : wp('5%'))}; 
   margin: ${hp('1%')}px;
   font-family: 'Poppins';
   font-weight: 900;
@@ -28,15 +33,15 @@ export const Title = styled.Text`
 `;
 
 export const Paragrafo = styled.Text`
-  font-size: ${wp('4%')}px; /* Ajuste de tamanho proporcional à largura */
+  font-size: ${wp('4%')}px; 
   margin: ${hp('1%')}px;
   text-align: center;
   font-family: Poppins;
 `;
 
 export const SimButton = styled.TouchableOpacity`
-  width: ${wp('70%')}; /* Reduzindo a largura para 70% */
-  min-height: ${hp('6%')}; /* Ajuste no tamanho do botão */
+  width: ${wp('70%')}; 
+  min-height: ${hp('6%')};
   border-radius: 10px;
   margin-top: ${hp('3%')};
   background-color: ${({isModalA}) => (isModalA ? '#2CD402' : '#F9102C')};
@@ -49,12 +54,12 @@ export const SimButtonText = styled.Text`
   text-align: center;
   margin: auto;
   font-weight: 900;
-  font-size: ${wp('4.5%')}; /* Ajuste no tamanho da fonte */
+  font-size: ${wp('4.5%')}; 
 `;
 
 export const NaoButton = styled.TouchableOpacity`
-  width: ${wp('70%')}; /* Reduzindo a largura para 70% */
-  min-height: ${hp('6%')}; /* Ajuste no tamanho do botão */
+  width: ${wp('70%')};
+  min-height: ${hp('6%')}; 
   border-radius: 10px;
   margin-top: ${hp('2%')};
   border-color: #292929;
@@ -68,6 +73,6 @@ export const NaoButtonText = styled.Text`
   text-align: center;
   margin: auto;
   font-weight: 900;
-  font-size: ${wp('4.5%')}; /* Ajuste no tamanho da fonte */
+  font-size: ${wp('4.5%')}; 
 `;
 

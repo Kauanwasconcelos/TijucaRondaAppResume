@@ -26,7 +26,7 @@ import lerLoginAtual from '../hooks/Realm/useDefineLogin';
 const HomeScreen = ({navigation}) => {
   const [rondas, setRondas] = useState([]);
   const [modalVisible, setModalVisible] = useState([]);
-  const [reload, setReload] = useState();
+  const [reload, setReload] = useState(!reload);
   const [rondaAtual, setRondaAtual] = useState(0);
   const [realm, setRealm] = useState(null);
   const [visibleBox, setVisibleBox] = useState(null);
@@ -41,20 +41,35 @@ const HomeScreen = ({navigation}) => {
     setModalVisible(null);
   };
 
-  const defineLoginAtual = async () => {
+  const defineUser = async () => {
     const loginAtual = await lerLoginAtual(realm);
-    
+    console.log("loginAtual")
     setUsuario(loginAtual);
   };
 
   const defineRondaAtual = async () => {
     const rondaAtual = await useDefineRonda(realm);
     console.log(rondaAtual)
+    console.log("rondaAtual")
     setRondaAtual(rondaAtual);
   };
-  // useEffect(() => {
-    
-  // },[]);
+  
+        const initRealm = async () => {
+          const iniciaRealm = await useInitRealm();
+          setRealm(iniciaRealm);
+        };
+
+  useEffect(() => {
+    const load = async () => {
+      await initRealm();
+      await defineUser()
+      // await defineRondaAtual()
+      // await defineLoginAtual()
+      // await useDefineRonda(realm)
+    }
+      load();
+
+  },[reload]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -66,28 +81,27 @@ const HomeScreen = ({navigation}) => {
           console.log(e);
         }
       };
-
-      const initRealm = async () => {
-        const iniciaRealm = await useInitRealm();
-        setRealm(iniciaRealm);
-      };
-      console.log(usuario.nomedeUsuario)
-
-      initRealm();
-      defineLoginAtual()
-      carregaRonda();
-      defineLoginAtual()
-      defineRondaAtual();
-      useDefineRonda(realm)
-    }, [reload]),
+      const load = async () => {
+        try{
+        await initRealm();
+        await defineUser()
+        // await defineRondaAtual()
+        // await useDefineRonda(realm)
+      }catch(e){
+        console.log(e + "TESTEEEEEEEE USE EFFECTTTFOCUS")
+      }}
+        load();
+        carregaRonda()
+    }, []),
   );
-
+  console.log("login define")
   return (
     <>
-      <HomeContainer>
+      <HomeContainer >
         <Header name={usuario.nomedeUsuario} setReload={setReload} reload={reload} />
-        <ListaView>
-          <List
+        <ListaView >
+          <List 
+            
             data={rondas}
             renderItem={({item}) => (
               <>
@@ -130,7 +144,7 @@ const HomeScreen = ({navigation}) => {
             keyExtractor={item => item.idRonda.toString()}
           />
         </ListaView>
-        <QRArea>
+        <QRArea setReload={setReload} reload={reload}>
           {/* <StyledButton mode="contained">a</StyledButton> */}
         </QRArea>
       </HomeContainer>

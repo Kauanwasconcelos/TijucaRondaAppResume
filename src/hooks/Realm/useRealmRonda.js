@@ -2,6 +2,7 @@ const defineRondaAtual = async (realm, idRonda) => {
   let ronda = await realm.objectForPrimaryKey('rondaStatus', 1);
   // let ronda = await realm.objects("ronda")
   console.log(ronda);
+  console.log("ronda define")
   if (!ronda) {
     realm.write(async () => {
       console.log('caindo aqui');
