@@ -1,24 +1,24 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Alert, ToastAndroid} from 'react-native';
+import {ToastAndroid} from 'react-native';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
+import {useCameraDevice, useCodeScanner} from 'react-native-vision-camera';
 import {
-  useCameraDevice,
-  useCodeScanner,
-  Camera,
-} from 'react-native-vision-camera';
-import {
-  Container,
-  LoadingText,
   CameraContainer,
   CameraQR,
   CameraPreview,
-  CameraPreview2,
-} from '../styles/QrCode/QRcodeStyles'; // Estilos importados
+  TopLeftCorner,
+  TopRightCorner,
+  BottomLeftCorner,
+  BottomRightCorner,
+  LoadingText,
+  TextArea,
+} from '../styles/QrCode/QRcodeStyles';
 import lerLoginAtual from '../hooks/Realm/useDefineLogin';
 import useInitRealm from '../hooks/Realm/useInitRealm';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import requisicao from '../hooks/postQr';
+import {Text} from 'react-native-paper';
 
 const QrCodeScreen = () => {
   const [latitude, setLat] = useState('');
@@ -29,6 +29,7 @@ const QrCodeScreen = () => {
   const [rondaAtual, setRondaAtual] = useState();
   const scannerEnable = useRef(true);
   const device = useCameraDevice('back');
+
   async function getLatitude() {
     try {
       Geolocation.getCurrentPosition(position => {
@@ -74,43 +75,34 @@ const QrCodeScreen = () => {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: async codes => {
-      if (scannerEnable.current == false) {
+      if (!scannerEnable.current) {
         return;
       }
-
       scannerEnable.current = false;
-      console.log('TESTEEEEE');
 
-      for (i = 0; i <= 0; i++) {
-        scannerEnable.current = false;
-        const valorQr = codes[0].value;
-        setValueqr(valorQr);
-        console.log(valorQr);
-        await initRealm();
-        await getLatitude();
-        await defineLoginAtual();
-        await defineRondaAtual();
-        // console.log(latitude, longitude);
-        
-        const requisicaoa = requisicao(
-          idUsuario,
-          rondaAtual,
-          valueqr,
-          latitude,
-          longitude,
+      const valorQr = codes[0].value;
+      setValueqr(valorQr);
+      await initRealm();
+      await getLatitude();
+      await defineLoginAtual();
+      await defineRondaAtual();
+
+      const requisicaoa = requisicao(
+        idUsuario,
+        rondaAtual,
+        valueqr,
+        latitude,
+        longitude,
+      );
+
+      if (requisicaoa) {
+        scannerEnable.current = true;
+        ToastAndroid.show('Local escaneado com sucesso', ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(
+          'Falha ao escanear, se o problema persistir, abra um chamado',
+          ToastAndroid.SHORT,
         );
-
-        if (requisicaoa) {
-          scannerEnable.current = true;
-          navigator.navigate('Home');
-          
-          ToastAndroid.show('Local escaneado com sucesso', ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show(
-            'Falha ao escanear, se o problema persistir, abra um chamado',
-            ToastAndroid.SHORT,
-          );
-        }
       }
     },
   });
@@ -120,14 +112,26 @@ const QrCodeScreen = () => {
   }
 
   return (
-   <CameraContainer>
-  <CameraQR codeScanner={codeScanner} device={device} isActive={true} />
-  {/* Adiciona uma sobreposição com transparência ao redor da câmera */}
-  <CameraPreview>
-    <CameraPreview2 />
-  </CameraPreview>
-</CameraContainer>
+    <>
+      <CameraContainer>
+        <TextArea>
+          <Text style={{
+            color : '#f0f0f0',
+            fontSize: 16,
+            fontWeight: 'medium',
+            textAlign: 'center',
+          }}> Escaneie o código do local para registrar sua presença no local</Text>/
+        </TextArea>
 
+        <CameraQR codeScanner={codeScanner} device={device} isActive={true} />
+        <CameraPreview>
+          <TopLeftCorner />
+          <TopRightCorner />
+          <BottomLeftCorner />
+          <BottomRightCorner />
+        </CameraPreview>
+      </CameraContainer>
+    </>
   );
 };
 

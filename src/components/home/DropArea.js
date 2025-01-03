@@ -55,7 +55,7 @@ const AnimatedItemContainer = ({ local, IsNull }) => {
     // Animação para os itens descerem
     Animated.timing(translateY, {
       toValue: 0,
-      duration: 300, // Duração da animação
+      duration: 200, // Duração da animação
       delay: 100, // Pequeno atraso para cada item
       useNativeDriver: true,
     }).start();

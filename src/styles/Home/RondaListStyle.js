@@ -1,8 +1,11 @@
 import styled from 'styled-components/native';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 // Lista View
 export const ListaView = styled.View`
-  height: 60%;
+  margin-top: ${hp('1%')}px;
+
+  margin-top:  20px;
+  height: 55%;
   width: 100%;
   text-align: center;
   border-radius: 10px;

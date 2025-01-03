@@ -1,18 +1,19 @@
 import styled from 'styled-components/native';
 import { Camera } from 'react-native-vision-camera';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-export const Container = styled.View`
-position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
- background-color: rgba(0, 0, 0, 0.0); 
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+export const CameraContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const CameraQR = styled(Camera)`
+  width: ${wp('65%')}px;
+  height: ${wp('65%')}px;
+  border-radius: 8px;
+
 `;
 
 export const LoadingText = styled.Text`
@@ -21,58 +22,67 @@ export const LoadingText = styled.Text`
   text-align: center;
 `;
 
-export const CameraContainer = styled.View`
-position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  background-color: rgba(0, 0, 0, 0.0); 
-  z-index: 0; /* Correção de z-index */
-`;
-
 export const CameraPreview = styled.View`
-position: absolute;
+  position: absolute;
+  width: ${wp('75%')}px;
+  height: ${wp('75%')}px;
+  border-color: transparent;
+`;
+
+export const Corner = styled.View`
+  width: ${wp('7%')}px;
+  height: ${wp('7%')}px;
+  position: absolute;
+  border-width: 4px;
+  border-style: solid;
+`;
+
+export const TopLeftCorner = styled(Corner)`
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  z-index: 1; /* Ajustado para estar acima do CameraContainer */
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
 `;
 
-export const CameraPreview2 = styled.View`
-position: absolute;
+export const TopRightCorner = styled(Corner)`
   top: 0;
+  right: 0;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  border-top-color: #ffffff;
+  border-right-color: #ffffff;
+`;
+
+export const BottomLeftCorner = styled(Corner)`
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 30%;
-  background-color: rgba(0, 0, 0, 0.0); /* Transparência */
-  justify-content: center;
-  align-items: center;
-  z-index: 2; /* Está acima do CameraPreview */
-
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: #ffffff;
+  border-left-color: #ffffff;
 `;
 
-export const ToastText = styled.Text`
-  color: #000;
+export const BottomRightCorner = styled(Corner)`
+  bottom: 0;
+  right: 0;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
 `;
 
-export const CameraQR = styled(Camera)`
-  width: 60%;
-  height: 30%;
-  z-index: 1;
-`;
+
+export const TextArea = styled.View`
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 18px;
+position: absolute;
+top: 10%;
+color: #f0f0f0;
+
+`
+
+

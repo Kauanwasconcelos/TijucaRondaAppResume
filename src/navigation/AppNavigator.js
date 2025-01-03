@@ -8,8 +8,8 @@ import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import theme from '../theme/theme';
 import ScreenTeste from '../screens/ScreenTeste';
-import {HoverEffect} from 'react-native-gesture-handler';
 import QrCodeScreen from '../screens/QrCodeScreen';
+import CustomHeader from '../navigation/CustomHeader'; // Importe o CustomHeader
 
 const Stack = createNativeStackNavigator();
 
@@ -40,11 +40,7 @@ export default function AppNavigator() {
 
   return (
     <PaperProvider theme={theme}>
-      {' '}
-      {/* Envolvendo com PaperProvider */}
       <ThemeProvider theme={theme}>
-        {' '}
-        {/* Envolvendo com ThemeProvider */}
         <NavigationContainer>
           <Stack.Navigator initialRouteName={isLoggedIn ? 'Home' : 'Login'}>
             <Stack.Group
@@ -54,7 +50,20 @@ export default function AppNavigator() {
               <Stack.Screen name="Teste" component={ScreenTeste} />
               <Stack.Screen name="Login" component={HomeScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
-              <Stack.Screen name="QR" component={QrCodeScreen} />
+              <Stack.Screen
+                name="QR"
+                component={QrCodeScreen}
+                options={({navigation}) => ({
+                  headerShown: true,
+                  header: () => (
+                    <CustomHeader
+                      title="Escanear QR-Code"
+                      onBackPress={() => navigation.goBack()}
+                      headerShown={true}
+                    />
+                  ),
+                })}
+              />
             </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>

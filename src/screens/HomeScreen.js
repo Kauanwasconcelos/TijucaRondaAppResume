@@ -63,9 +63,9 @@ const HomeScreen = ({navigation}) => {
     const load = async () => {
       await initRealm();
       await defineUser()
-      // await defineRondaAtual()
-      // await defineLoginAtual()
-      // await useDefineRonda(realm)
+      await defineRondaAtual()
+      await defineLoginAtual()
+      await useDefineRonda(realm)
     }
       load();
 
@@ -85,8 +85,8 @@ const HomeScreen = ({navigation}) => {
         try{
         await initRealm();
         await defineUser()
-        // await defineRondaAtual()
-        // await useDefineRonda(realm)
+        await defineRondaAtual()
+        await useDefineRonda(realm)
       }catch(e){
         console.log(e + "TESTEEEEEEEE USE EFFECTTTFOCUS")
       }}
@@ -98,7 +98,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <>
       <HomeContainer >
-        <Header name={usuario.nomedeUsuario} setReload={setReload} reload={reload} />
+        <Header setReload={setReload} reload={reload} />
         <ListaView >
           <List 
             
