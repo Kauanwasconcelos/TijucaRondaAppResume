@@ -6,8 +6,10 @@ import {
 } from 'react-native-responsive-screen';
 
 export const Container = styled.View`
-  border-radius: 50px 50px 0px 0px ;
+  border-radius: 40px 40px 0px 0px ;
   flex: 1;
+  position: relative;
+  z-index: 3;
   justify-content: center;
   align-items: center;
   background-color: #f9f9f9;
@@ -22,7 +24,7 @@ export const QRImage = styled.Image`
 
 export const StyledButton = styled(Button)`
   padding: ${hp('1%')}px ${wp('8%')}px;
-  margin: ${hp('2%')}px;
+  margin: ${hp('1%')}px;
   border-radius: ${wp('6%')}px;
   background-color: ${({theme}) => theme.colors.primary};
 `;

@@ -14,13 +14,21 @@ import {
 import initRonda from '../../hooks/initRonda';
 import stopRonda from '../../hooks/stopRonda';
 import {ToastAndroid} from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
-
-const ModalComponent = ({isVisible, onClose, prop, defineRondaAtual}) => {
+const ModalComponent = ({
+  isVisible,
+  onClose,
+  prop,
+  defineRondaAtual,
+  toggleBox,
+}) => {
   // Verificando o estado do modal (iniciar ou encerrar)
   const isModalA = prop[1] === 0; // Se for 0, é um modal para iniciar a ronda
-  console.log(prop[1])
+  console.log(prop[1]);
   // Função para iniciar a ronda
   const iniciaRonda = async (idRonda, idUsuario) => {
     const playRonda = await initRonda(idRonda, idUsuario);
@@ -40,6 +48,7 @@ const ModalComponent = ({isVisible, onClose, prop, defineRondaAtual}) => {
     const pararRonda = await stopRonda(prop[1]);
     if (pararRonda === true) {
       ToastAndroid.show('Ronda encerrada com sucesso', ToastAndroid.SHORT);
+      toggleBox(0);
       defineRondaAtual(prop[2], 0);
       onClose();
     }

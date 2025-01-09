@@ -11,7 +11,7 @@ export const HeaderContainer = styled.View`
   background-color: ${({theme}) =>
     theme.colors.surface}; 
   border-radius: 0px 0px 20px 20px;
-  padding: ${wp('2%')}px;
+  padding: ${wp('1%')}px;
 `;
 
 export const HeaderTitle = styled.View`
@@ -26,11 +26,9 @@ export const HeaderText = styled.Text`
   font-family: Poppins-Light;
 `;
 
-export const ReloadButton = styled.View`
-  margin-right: ${wp('1%')};
-  justify-content: center;
-  align-items: center;
-  width: ${wp(
-    '30%',
-  )};
-`;
+// export const ReloadButton = styled.View`
+//   margin-right: ${wp('1%')};
+//   justify-content: center;
+//   align-items: center;
+
+// `;

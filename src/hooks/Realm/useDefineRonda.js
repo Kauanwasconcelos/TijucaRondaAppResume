@@ -1,4 +1,5 @@
 const lerRondaAtual = async realm => {
+  try{
   let ronda = await realm.objectForPrimaryKey('rondaStatus', 1);
   // const rondaRealmVerify = typeof(ronda)
   console.log(ronda)
@@ -18,6 +19,9 @@ const lerRondaAtual = async realm => {
     console.log("CAI NA RONDAAA")
     return ronda.status;
   }
+}catch(E){
+  console.log(E + "TESTEEARONADDAD")
+}
 };
 
 export default lerRondaAtual; // Exportando a função como default

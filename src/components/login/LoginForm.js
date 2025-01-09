@@ -38,24 +38,23 @@ const LoginForm = ({
         onChangeText={setCpf}
         error={!!errorCpf} // Marca o campo como erro caso haja um erro de CPF
       />
-      {/* Exibe mensagem de erro para CPF */}
+     
       {errorCpf && <Text style={{color: 'red', marginTop: 5}}>{errorCpf}</Text>}
 
-      {/* Campo Senha */}
+    
       <StyledTextInput
         label="Senha"
         mode="outlined"
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
-        error={!!errorSenha} // Marca o campo como erro caso haja um erro de Senha
+        error={!!errorSenha} 
       />
-      {/* Exibe mensagem de erro para Senha */}
       {errorSenha && (
-        <Text style={{color: 'red', marginTop: 5}}>{errorSenha}</Text>
+        <Text style={{color: 'red', marginTop: 5, }}>{errorSenha}</Text>
       )}
 
-      {/* Botão de Login */}
+     
       <StyledButton mode="contained" onPress={handleLogin} disabled={isLoading}>
         {isLoading ? <ActivityIndicator size="small" color="#fff" /> : 'Entrar'}
       </StyledButton>

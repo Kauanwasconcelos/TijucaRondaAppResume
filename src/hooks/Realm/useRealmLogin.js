@@ -3,7 +3,7 @@ const defineLoginAtual = async (realm, idUsuario, token, nomedeUsuario) => {
     
     
     if (!login) {
-      realm.write(async () => {
+      await realm.write(async () => {
         console.log('caindo aqui');
         console.log(token)
         const write = await realm.create('loginStatus', {
@@ -17,7 +17,6 @@ const defineLoginAtual = async (realm, idUsuario, token, nomedeUsuario) => {
         login.idUsuario = idUsuario;
         login.token = token,
         login.nomedeUsuario = nomedeUsuario;
-        
       });
     } else {
       realm.write(() => {

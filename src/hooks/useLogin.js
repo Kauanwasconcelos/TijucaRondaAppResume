@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { validarCpf, validarSenha } from '../utils/validate'; // Importando as validações
+import {useState} from 'react';
+import {validarCpf, validarSenha} from '../utils/validate'; // Importando as validações
 import User from '../api/User';
-import realmInit from "../hooks/Realm/useInitRealm"
+import realmInit from './Realm/initRealm';
 import defineLoginAtual from './Realm/useRealmLogin';
 
 const useLogin = () => {
@@ -29,15 +29,20 @@ const useLogin = () => {
     setIsLoading(true);
 
     try {
-      const resposta = await instancia.login(cpf, senha); // 
+      const resposta = await instancia.login(cpf, senha); //
       setIsLoading(false);
       if (resposta.success) {
-        const frealm = await realmInit()
+        const frealm = await realmInit();
         // console.log(frealm)
         // setRealm(frealm)
-        console.log("AQUI ESTOU NO LOGIN")
-        
-        defineLoginAtual(frealm,resposta.idUsuario, resposta.token, resposta.nomedeUsuario)        
+        console.log('AQUI ESTOU NO LOGIN');
+
+        defineLoginAtual(
+          frealm,
+          resposta.idUsuario,
+          resposta.token,
+          resposta.nomedeUsuario,
+        );
         return true;
       }
 

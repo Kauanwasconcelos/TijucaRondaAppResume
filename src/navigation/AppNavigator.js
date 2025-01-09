@@ -47,8 +47,7 @@ export default function AppNavigator() {
               screenOptions={{
                 headerShown: false,
               }}>
-              <Stack.Screen name="Teste" component={ScreenTeste} />
-              <Stack.Screen name="Login" component={HomeScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen
                 name="QR"

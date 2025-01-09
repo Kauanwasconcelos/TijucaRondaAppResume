@@ -1,19 +1,26 @@
 import styled from 'styled-components/native';
-import { Camera } from 'react-native-vision-camera';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {Camera} from 'react-native-vision-camera';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export const CameraContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({theme}) => theme.colors.primary};
 `;
 
 export const CameraQR = styled(Camera)`
-  width: ${wp('65%')}px;
-  height: ${wp('65%')}px;
+  position: absolute;
+  width: ${wp('65%')};
+  height: ${wp('65%')};
   border-radius: 8px;
-
+  top: 50%;
+  left: 50%;
+  margin-top: -${wp('32.5%')};
+  margin-left: -${wp('32.5%')};
 `;
 
 export const LoadingText = styled.Text`
@@ -23,10 +30,10 @@ export const LoadingText = styled.Text`
 `;
 
 export const CameraPreview = styled.View`
-  position: absolute;
+  position: fixed;
   width: ${wp('75%')}px;
   height: ${wp('75%')}px;
-  border-color: transparent;
+ 
 `;
 
 export const Corner = styled.View`
@@ -73,16 +80,12 @@ export const BottomRightCorner = styled(Corner)`
   border-right-color: #ffffff;
 `;
 
-
 export const TextArea = styled.View`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 18px;
-position: absolute;
-top: 10%;
-color: #f0f0f0;
-
-`
-
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+  position: absolute;
+  top: 10%;
+  color: #f0f0f0;
+`;

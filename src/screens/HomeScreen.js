@@ -15,13 +15,14 @@ import Header from '../components/home/Header';
 import {HomeContainer} from '../styles/Home/HomeStyles';
 import {useFocusEffect} from '@react-navigation/native';
 import ModalComponent from '../components/home/ModalComponent';
-import useInitRealm from '../hooks/Realm/useInitRealm';
+import initializeRealm from '../hooks/Realm/initRealm';
 import useRealmRonda from '../hooks/Realm/useRealmRonda';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import DropArea from '../components/home/DropArea';
 import QRArea from '../components/QrCode/QRArea';
-import {StyledButton} from '../styles/Login/styledComponents';
+
 import lerLoginAtual from '../hooks/Realm/useDefineLogin';
+import {RefreshControl} from 'react-native';
 
 const HomeScreen = ({navigation}) => {
   const [rondas, setRondas] = useState([]);
@@ -30,8 +31,21 @@ const HomeScreen = ({navigation}) => {
   const [rondaAtual, setRondaAtual] = useState(0);
   const [realm, setRealm] = useState(null);
   const [visibleBox, setVisibleBox] = useState(null);
-  const [usuario, setUsuario] = useState({})
-  
+  const [usuario, setUsuario] = useState({});
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const respostaHookRondas = await useRondas();
+      setRondas(respostaHookRondas);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   const toggleBox = idRonda => {
     setVisibleBox(visibleBox === idRonda ? null : idRonda);
   };
@@ -43,33 +57,25 @@ const HomeScreen = ({navigation}) => {
 
   const defineUser = async () => {
     const loginAtual = await lerLoginAtual(realm);
-    console.log("loginAtual")
     setUsuario(loginAtual);
   };
 
   const defineRondaAtual = async () => {
     const rondaAtual = await useDefineRonda(realm);
-    console.log(rondaAtual)
-    console.log("rondaAtual")
     setRondaAtual(rondaAtual);
   };
-  
-        const initRealm = async () => {
-          const iniciaRealm = await useInitRealm();
-          setRealm(iniciaRealm);
-        };
+
+  const initRealm = async () => {
+    const iniciaRealm = await initializeRealm();
+    setRealm(iniciaRealm);
+  };
 
   useEffect(() => {
-    const load = async () => {
-      await initRealm();
-      await defineUser()
-      await defineRondaAtual()
-      await defineLoginAtual()
-      await useDefineRonda(realm)
+    if (realm) {
+      defineRondaAtual();
+      defineUser();
     }
-      load();
-
-  },[reload]);
+  }, [realm]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -81,27 +87,20 @@ const HomeScreen = ({navigation}) => {
           console.log(e);
         }
       };
-      const load = async () => {
-        try{
-        await initRealm();
-        await defineUser()
-        await defineRondaAtual()
-        await useDefineRonda(realm)
-      }catch(e){
-        console.log(e + "TESTEEEEEEEE USE EFFECTTTFOCUS")
-      }}
-        load();
-        carregaRonda()
-    }, []),
+      initRealm();
+      carregaRonda();
+    }, [reload]),
   );
-  console.log("login define")
   return (
     <>
-      <HomeContainer >
-        <Header setReload={setReload} reload={reload} />
-        <ListaView >
-          <List 
-            
+      <HomeContainer>
+        <Header
+       
+       
+          name={usuario.nomedeUsuario}
+        />
+        <ListaView>
+          <List
             data={rondas}
             renderItem={({item}) => (
               <>
@@ -130,22 +129,29 @@ const HomeScreen = ({navigation}) => {
                       isVisible={true}
                       onClose={onClose}
                       defineRondaAtual={useRealmRonda}
+                      toggleBox={toggleBox}
                       prop={[item.idRonda, rondaAtual, realm]}
                     />
                   )}
                 </BView>
 
-                {/* Colocando o DropArea fora do BView */}
-                {visibleBox === item.idRonda && (
+                {visibleBox == item.idRonda && (
                   <DropArea idRonda={item.idRonda} />
                 )}
               </>
             )}
             keyExtractor={item => item.idRonda.toString()}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#ff0000', '#00ff00', '#0000ff']}
+              />
+            }
           />
         </ListaView>
         <QRArea setReload={setReload} reload={reload}>
-          {/* <StyledButton mode="contained">a</StyledButton> */}
+ 
         </QRArea>
       </HomeContainer>
     </>

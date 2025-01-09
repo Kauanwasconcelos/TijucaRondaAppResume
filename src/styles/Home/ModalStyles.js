@@ -41,7 +41,7 @@ export const Paragrafo = styled.Text`
 
 export const SimButton = styled.TouchableOpacity`
   width: ${wp('70%')}; 
-  min-height: ${hp('6%')};
+  min-height: ${hp('5%')};
   border-radius: 10px;
   margin-top: ${hp('3%')};
   background-color: ${({isModalA}) => (isModalA ? '#2CD402' : '#F9102C')};
@@ -59,7 +59,7 @@ export const SimButtonText = styled.Text`
 
 export const NaoButton = styled.TouchableOpacity`
   width: ${wp('70%')};
-  min-height: ${hp('6%')}; 
+  min-height: ${hp('5%')}; 
   border-radius: 10px;
   margin-top: ${hp('2%')};
   border-color: #292929;

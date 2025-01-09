@@ -1,27 +1,26 @@
 import styled from 'styled-components/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const DropAreaContainer = styled.View`
-  background-color: #fff; 
-  margin-top: -19px;
-  padding: 16px;
-  border-radius: 0px 0px 8px 8px;
-  position: relative
-  ;
-  z-index: -1;
+  background-color: #fff;
+  margin-top: ${hp('-2%')}px;
+  padding: ${wp('4%')}px;
+  border-radius: ${wp('2%')}px ${wp('2%')}px ${wp('1%')}px ${wp('1%')}px;
 `;
 
 export const ItemContainer = styled.View`
-  display: flex;
+  flex: auto;
   flex-direction: row;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 6px;
-  background-color: ${({IsNull}) => (IsNull? '#2CD402' : '#F9102C')}
+  justify-content: space-between;
+  padding: ${wp('3%')}px;
+  margin-bottom: ${hp('1%')}px;
+  border-radius: ${wp('1.5%')}px;
+  background-color: ${({ IsNull }) => (IsNull ? '#2CD402' : '#F9102C')};
 `;
 
 export const ItemText = styled.Text`
-  margin: 0% 50% 0% 8%;
+
   color: white;
-  font-size: 16px;
+  font-size: ${wp('3%')}px;
   font-weight: bold;
 `;

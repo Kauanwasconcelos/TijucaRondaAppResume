@@ -21,12 +21,12 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ModalComponent from '../components/home/ModalComponent';
 
-import useInitRealm from '../hooks/Realm/useInitRealm';
+import useInitRealm from '../hooks/Realm/initRealm';
 import useRealmRonda from '../hooks/Realm/useRealmRonda';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import lerRondaAtual from '../hooks/Realm/useDefineRonda';
-import { Button } from 'react-native-paper';
-import { TouchableOpacity , Text} from 'react-native';
+import {Button} from 'react-native-paper';
+import {TouchableOpacity, Text} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const HomeScreen = ({navigation}) => {
@@ -41,32 +41,25 @@ const HomeScreen = ({navigation}) => {
     setModalVisible(null);
   };
 
-useEffect(()=>{
-  console.log("Fui carregado no useeffect")
+  useEffect(() => {
+    console.log('Fui carregado no useeffect');
 
-  const defineRondaAtual = async () => {
-    const rondaAtual = await useDefineRonda(realm);
-    console.log(rondaAtual + "rondaAtual");
-    setRondaAtual(rondaAtual);
-  };
-  defineRondaAtual();
-
-
-})
-
-
-
+    const defineRondaAtual = async () => {
+      const rondaAtual = await useDefineRonda(realm);
+      console.log(rondaAtual + 'rondaAtual');
+      setRondaAtual(rondaAtual);
+    };
+    defineRondaAtual();
+  });
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("Fui Carregado no focus")
-
-
+      console.log('Fui Carregado no focus');
 
       const carregaRonda = async () => {
         try {
           const respostaHookRondas = await useRondas();
-          console.log(respostaHookRondas)
+          console.log(respostaHookRondas);
           setRondas(respostaHookRondas);
         } catch (e) {
           console.log(e);
@@ -85,7 +78,7 @@ useEffect(()=>{
   return (
     <>
       <HomeContainer>
-        <Header name="VIGIA"  setReload={setReload} reload={reload}/>
+        <Header name="VIGIA" setReload={setReload} reload={reload} />
         <ListaView>
           <List
             data={rondas}
@@ -125,7 +118,6 @@ useEffect(()=>{
             }}
           />
         </ListaView>
-
       </HomeContainer>
     </>
   );

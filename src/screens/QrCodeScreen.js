@@ -15,12 +15,13 @@ import {
   TextArea,
 } from '../styles/QrCode/QRcodeStyles';
 import lerLoginAtual from '../hooks/Realm/useDefineLogin';
-import useInitRealm from '../hooks/Realm/useInitRealm';
+import useInitRealm from '../hooks/Realm/initRealm';
 import useDefineRonda from '../hooks/Realm/useDefineRonda';
 import requisicao from '../hooks/postQr';
 import {Text} from 'react-native-paper';
 
 const QrCodeScreen = () => {
+  const navigator = useNavigation();
   const [latitude, setLat] = useState('');
   const [longitude, setLog] = useState('');
   const [valueqr, setValueqr] = useState('');
@@ -31,10 +32,11 @@ const QrCodeScreen = () => {
   const device = useCameraDevice('back');
 
   async function getLatitude() {
+    console.log('PEGANDO LATITUDE E LONGITUDE');
     try {
-      Geolocation.getCurrentPosition(position => {
-        setLat(position.coords.latitude);
-        setLog(position.coords.longitude);
+      await Geolocation.getCurrentPosition(async position => {
+        await setLat(position.coords.latitude);
+        await setLog(position.coords.longitude);
       });
     } catch (e) {
       console.log(e);
@@ -57,52 +59,42 @@ const QrCodeScreen = () => {
   };
 
   useEffect(() => {
-    initRealm();
-    defineLoginAtual();
-    defineRondaAtual();
-    getLatitude();
-  }, []);
+    if (realm) {
+      getLatitude();
+      defineLoginAtual();
+      defineRondaAtual();
+    }
+  }, [realm]);
 
   useFocusEffect(
     React.useCallback(() => {
       initRealm();
-      defineLoginAtual();
-      defineRondaAtual();
-      getLatitude();
     }, []),
   );
 
   const codeScanner = useCodeScanner({
     codeTypes: ['qr', 'ean-13'],
     onCodeScanned: async codes => {
-      if (!scannerEnable.current) {
+      await getLatitude();
+      if (scannerEnable.current == false) {
+        console.log('DESATIVADO');
         return;
       }
+
       scannerEnable.current = false;
 
       const valorQr = codes[0].value;
-      setValueqr(valorQr);
-      await initRealm();
-      await getLatitude();
-      await defineLoginAtual();
-      await defineRondaAtual();
 
-      const requisicaoa = requisicao(
+      const requisicaoLog = await requisicao(
         idUsuario,
         rondaAtual,
-        valueqr,
+        valorQr,
         latitude,
         longitude,
       );
-
-      if (requisicaoa) {
-        scannerEnable.current = true;
-        ToastAndroid.show('Local escaneado com sucesso', ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(
-          'Falha ao escanear, se o problema persistir, abra um chamado',
-          ToastAndroid.SHORT,
-        );
+      // setValueqr(valorQr);
+      if (requisicaoLog == true) {
+        navigator.navigate('Home');
       }
     },
   });
@@ -115,16 +107,20 @@ const QrCodeScreen = () => {
     <>
       <CameraContainer>
         <TextArea>
-          <Text style={{
-            color : '#f0f0f0',
-            fontSize: 16,
-            fontWeight: 'medium',
-            textAlign: 'center',
-          }}> Escaneie o código do local para registrar sua presença no local</Text>/
+          <Text
+            style={{
+              color: '#f0f0f0',
+              fontSize: 16,
+              fontWeight: 'medium',
+              textAlign: 'center',
+            }}>
+            Escaneie o código do local para registrar sua presença no local
+          </Text>
         </TextArea>
 
-        <CameraQR codeScanner={codeScanner} device={device} isActive={true} />
+
         <CameraPreview>
+        <CameraQR codeScanner={codeScanner} device={device} isActive={true} />
           <TopLeftCorner />
           <TopRightCorner />
           <BottomLeftCorner />
